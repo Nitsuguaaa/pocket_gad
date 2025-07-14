@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
+import 'screens/landing_page.dart'; // your custom screen
 
 void main() {
-  runApp(const MainApp());
+  runApp(const MyApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+  
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Your App Title',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 190, 46, 222)),
+        useMaterial3: true,
       ),
+      home: const LandingPage(), // start here
+      /*routes: {
+        '/about': (context) => const AboutMePage(),
+        '/contact': (context) => const ContactPage(),
+        '/more': (context) => const MoreInfoPage(),
+      },*/
     );
   }
 }
