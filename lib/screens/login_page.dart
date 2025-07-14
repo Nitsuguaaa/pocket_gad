@@ -124,7 +124,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your username';
-                            }  
+                            }
+                            if (value.length < 8 & 10){
+                              return 'Username must contain 8 - 10 digits';
+                            }
                             return null;
                           },
                         ),
@@ -161,13 +164,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               return 'Please enter your password';
                             }
                             if (value.length < 8){
-                              return 'Please ';
+                              return 'Please make your password case sensitive';
                             }
                             if (!value.contains(RegExp(r'[A-Z]'))){
-                              return '';
+                              return 'Please make your password case sensitive';
                             }
                             if (!value.contains(RegExp(r'[a-z]'))){
-                              return '';
+                              return 'Please make your password case sensitive';
+                            }
+                            if (!value.contains(RegExp(r'[1-9]'))) {
+                              return 'Please make your password case sensitive';
+                            }
+                            if (!value.contains(RegExp(r'[1-9]'))) {
+                              return 'Please make your password case sensitive';
                             }
                             return null;
                           },
