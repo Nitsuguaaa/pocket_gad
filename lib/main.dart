@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pocket_gad/screens/control_panel.dart';
+import 'screens/landing_page.dart';
+import 'screens/login_page.dart';
 
 void main() {
   runApp(const MainApp());
@@ -6,15 +9,25 @@ void main() {
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'PlaceHolder',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 234, 160, 251)),
+        useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color.fromARGB(255, 234, 160, 251)
+        )
       ),
+      home: const ControlPanel(), // start here
+      /*routes: {
+        '/about': (context) => const AboutMePage(),
+        '/contact': (context) => const ContactPage(),
+        '/more': (context) => const MoreInfoPage(),
+      },*/
     );
   }
 }
