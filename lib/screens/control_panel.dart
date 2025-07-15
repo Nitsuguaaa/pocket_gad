@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pocket_gad/control-panel/statistics_screen.dart';
+import 'package:pocket_gad/control-panel/surveys_screen.dart';
+import 'package:pocket_gad/control-panel/attendances_screen.dart';
 
 class ControlPanel extends StatefulWidget {
   const ControlPanel({super.key});

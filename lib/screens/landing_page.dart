@@ -8,12 +8,19 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
+  Widget _buildLandingPage() {
+    return Container(
+      margin: const EdgeInsets.all(10.0),
+      child: const Text("ayoooo!"),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Landing Page")),
-      body: const Center(
-        child: Text("Ayo waddup"),
+      body: Center(
+        child: _buildLandingPage(),
       ),
     );
   }
