@@ -11,6 +11,16 @@ class ControlPanel extends StatefulWidget {
 }
 
 class _ControlPanelState extends State<ControlPanel> {
+  Widget _currentScreen = const SurveysScreen();
+
+  void _selectScreen(Widget screen) {
+    setState(() {
+      _currentScreen = screen;
+    });
+
+    Navigator.pop(context);
+  } 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,27 +37,25 @@ class _ControlPanelState extends State<ControlPanel> {
             ListTile(
               title: const Text("Surveys"),
               onTap: () {
-
+                _selectScreen(const SurveysScreen());
               },
             ),
             ListTile(
               title: const Text("Attendance"),
               onTap: () {
-
+                _selectScreen(const AttendancesScreen());
               },
             ),
             ListTile(
               title: const Text("Statistics [Admin]"),
               onTap: () {
-                
+                _selectScreen(const StatisticsScreen());
               },
             )
           ],
         ),
       ),
-      body: const Center(
-        child: Text("Ayo waddup"),
-      ),
+      body: _currentScreen,
     );
   }
 }
