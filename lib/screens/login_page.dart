@@ -3,30 +3,30 @@ import 'package:flutter/material.dart';
 
 
 void main() {
-  runApp(const MyApp());
+  runApp(const LoginScreen());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'GAD Login',
-      home: LoginScreen(),
+      home: Loginscreen(),
     );
   }
 }
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class Loginscreen extends StatefulWidget {
+  const Loginscreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<Loginscreen> createState() => _LoginscreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginscreenState extends State<Loginscreen> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -194,7 +194,7 @@ void _showForgotPasswordDialog() {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("desktop-login-HIFI.png"),
+                image: AssetImage("photos/desktop-login-HIFI.png"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -259,9 +259,9 @@ void _showForgotPasswordDialog() {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              Image(image: AssetImage('logo-BSU.png'), height: 120),
+              Image(image: AssetImage('photos/logo-BSU.png'), height: 120),
               SizedBox(width: 12),
-              Image(image: AssetImage('logo-GAD.png'), height: 120),
+              Image(image: AssetImage('photos/gad_logo.png'), height: 120),
             ],
           ),
           const SizedBox(height: 16),
@@ -288,7 +288,7 @@ void _showForgotPasswordDialog() {
     );
   }
 
-//contain login from
+//contain login form
 Widget _buildRightPanel(bool isMobile, {required bool isRow}) {
   return Container(
     width: isRow ? null : double.infinity,
@@ -308,7 +308,7 @@ Widget _buildRightPanel(bool isMobile, {required bool isRow}) {
           child: Opacity(
             opacity: 0.05,
             child: Image.asset(
-              "overlay-women.png",
+              "photos/overlay-women.png",
               fit: BoxFit.cover,
             ),
           ),
