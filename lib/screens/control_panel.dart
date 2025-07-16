@@ -19,19 +19,23 @@ class _ControlPanelState extends State<ControlPanel> {
     });
 
     Navigator.pop(context);
-  } 
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Dashboard"),
-      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,),
+      appBar: AppBar(
+        title: const Text("Dashboard"),
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+      ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              decoration: BoxDecoration(color: Theme.of(context).appBarTheme.backgroundColor),
+              decoration: BoxDecoration(
+                color: Theme.of(context).appBarTheme.backgroundColor,
+              ),
               child: Text('Options'),
             ),
             ListTile(
@@ -40,18 +44,12 @@ class _ControlPanelState extends State<ControlPanel> {
                 _selectScreen(const SurveysScreen());
               },
             ),
-            ListTile(
-              title: const Text("Attendance"),
-              onTap: () {
+            ListTile(title: const Text("Attendance"), onTap: () {
                 _selectScreen(const AttendancesScreen());
-              },
-            ),
-            ListTile(
-              title: const Text("Statistics [Admin]"),
-              onTap: () {
+            }),
+            ListTile(title: const Text("Statistics [Admin]"), onTap: () {
                 _selectScreen(const StatisticsScreen());
-              },
-            )
+            }),
           ],
         ),
       ),

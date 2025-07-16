@@ -11,14 +11,22 @@ class _AttendancesScreen extends State<AttendancesScreen> {
   Widget _buildLandingPage() {
     return Container(
       margin: const EdgeInsets.all(10.0),
-      child: const Text("ayoooo!"),
+      child: Column(children: [
+        Row(children: [
+          Text("Attendance   "),
+          Text("   home / Attendance")
+        ],),
+        Container(child: Column(children: [ //ATTENDANCE AVAILABLE
+
+        ],),)
+      ],)
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Attendance Screen")),
+      //appBar: AppBar(title: const Text("Attendance")),
       body: Center(
         child: _buildLandingPage(),
       ),

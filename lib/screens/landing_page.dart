@@ -11,7 +11,7 @@ class _LandingPageState extends State<LandingPage> {
   Widget _buildLandingPage() {
     return Container(
       margin: const EdgeInsets.all(10.0),
-      child: const Text("ayoooo!"),
+      child: const Text("This is the landing page"),
     );
   }
 
