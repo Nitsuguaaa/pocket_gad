@@ -16,4 +16,23 @@ dev_dependencies:
   flutter_lints: ^5.0.0
 
 flutter:
+
   uses-material-design: true
+
+  assets:
+    - assets/photos/slider-dec.png
+
+  fonts:
+    - family: FlexSlider
+      fonts:
+        - asset: assets/fonts/flexslider-icon.ttf
+    - family: FontAwesome
+      fonts:
+        - asset: assets/fonts/fontawesome-webfont.ttf
+    - family: Slick
+      fonts:
+        - asset: assets/fonts/slick.ttf
+    # test font
+    - family: Bosstony
+      fonts:
+        - asset: assets/fonts/Bosstony.ttf
