@@ -46,7 +46,7 @@ class _ControlPanelState extends State<ControlPanel> {
         ),
       ),
       body: const Center(
-        child: Text("Ayo waddup"),
+        child: Text("This is the control panel"),
       ),
     );
   }
