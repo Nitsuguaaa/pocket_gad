@@ -18,7 +18,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-    assets:
+  assets:
     - assets/photos/logo-bsu.png
     - assets/photos/desktop-login-hiFi.png
     - assets/photos/overlay-women.png
