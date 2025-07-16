@@ -17,3 +17,19 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+    assets:
+    - assets/photos/logo-bsu.png
+    - assets/photos/desktop-login-hiFi.png
+    - assets/photos/overlay-women.png
+    - assets/photos/gad_logo.png
+  fonts:
+     - family: Roboto
+       fonts:
+         - asset: assets/fonts/Roboto-Regular.ttf
+     - family: Snoopy
+       fonts:
+         - asset: assets/fonts/snoopy_reg-webfont.otf
+     - family: Sans
+       fonts:
+         - asset: assets/fonts/TikTokSans-Regular.ttf

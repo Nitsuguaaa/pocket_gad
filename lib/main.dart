@@ -22,7 +22,7 @@ class MainApp extends StatelessWidget {
           backgroundColor: Color.fromARGB(255, 234, 160, 251)
         )
       ),
-      home: const LoginScreen()//ControlPanel()//LoginScreen(), // s  tart here
+      home: const LoginScreen(), // start here
       /*routes: {
         '/about': (context) => const AboutMePage(),
         '/contact': (context) => const ContactPage(),
