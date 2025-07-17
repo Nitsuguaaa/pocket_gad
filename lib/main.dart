@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pocket_gad/screens/control_panel.dart';
-import 'screens/landing_page.dart';
-import 'screens/login_page.dart';
 
 void main() {
   runApp(const MainApp());
