@@ -19,7 +19,7 @@ class MainApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 234, 160, 251)),
         useMaterial3: true,
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color.fromARGB(255, 234, 160, 251)
+          backgroundColor: Color(0xFFFAD6E9)
         )
       ),
       home: const ControlPanel(), // start here
