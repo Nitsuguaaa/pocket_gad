@@ -25,6 +25,7 @@ flutter:
     - assets/photos/overlay-women.png
     - assets/photos/gad_logo.png
     - assets/photos/slider-dec.png
+    - assets/photos/survey_logo.png
 
   fonts:
     - family: Roboto
