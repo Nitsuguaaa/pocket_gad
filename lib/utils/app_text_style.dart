@@ -7,6 +7,12 @@ class AppTextStyles {
     fontFamily: 'Roboto',
   );
 
+   static const TextStyle AppTitle = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    fontFamily: 'Roboto',
+  );
+
   static const TextStyle subtitle = TextStyle(
     fontSize: 18,
     fontFamily: 'Michroma',

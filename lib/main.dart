@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pocket_gad/screens/control_panel.dart';
-import 'screens/landing_page.dart';
-import 'screens/login_page.dart';
 
 void main() {
   runApp(const MainApp());
@@ -19,7 +17,7 @@ class MainApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 234, 160, 251)),
         useMaterial3: true,
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFFFAD6E9),
+          backgroundColor: Color.fromARGB(255, 234, 160, 251)
         )
       ),
       home: const LandingPage(), // start here

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+
+//SCREENS
 import 'package:pocket_gad/control-panel/statistics_screen.dart';
 import 'package:pocket_gad/control-panel/surveys_screen.dart';
 import 'package:pocket_gad/control-panel/attendances_screen.dart';
+
+//ASSETS
+import 'package:pocket_gad/utils/app_text_style.dart';
 
 class ControlPanel extends StatefulWidget {
   const ControlPanel({super.key});
@@ -11,7 +16,7 @@ class ControlPanel extends StatefulWidget {
 }
 
 class _ControlPanelState extends State<ControlPanel> {
-  Widget _currentScreen = const SurveysScreen();
+  Widget _currentScreen = const StatisticsScreen();
 
   void _selectScreen(Widget screen) {
     setState(() {
@@ -25,7 +30,7 @@ class _ControlPanelState extends State<ControlPanel> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Dashboard"),
+        title: const Text("Dashboard", style: AppTextStyles.AppTitle,),
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       ),
       drawer: Drawer(
@@ -36,18 +41,18 @@ class _ControlPanelState extends State<ControlPanel> {
               decoration: BoxDecoration(
                 color: Theme.of(context).appBarTheme.backgroundColor,
               ),
-              child: Text('Options'),
+              child: Text('Options', style: AppTextStyles.header1,),
             ),
             ListTile(
-              title: const Text("Surveys"),
+              title: const Text("Surveys", style: AppTextStyles.body,),
               onTap: () {
                 _selectScreen(const SurveysScreen());
               },
             ),
-            ListTile(title: const Text("Attendance"), onTap: () {
+            ListTile(title: const Text("Attendance", style: AppTextStyles.body), onTap: () {
                 _selectScreen(const AttendancesScreen());
             }),
-            ListTile(title: const Text("Statistics [Admin]"), onTap: () {
+            ListTile(title: const Text("Statistics [Admin]", style: AppTextStyles.body), onTap: () {
                 _selectScreen(const StatisticsScreen());
             }),
           ],
