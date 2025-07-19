@@ -7,29 +7,47 @@ environment:
   sdk: ^3.8.1
 
 dependencies:
+  fl_chart: ^1.0.0
+  path_provider: ^2.1.2
   flutter:
     sdk: flutter
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 flutter:
+
   uses-material-design: true
 
-    assets:
+  assets:
     - assets/photos/logo-bsu.png
     - assets/photos/desktop-login-hiFi.png
     - assets/photos/overlay-women.png
     - assets/photos/gad_logo.png
+    - assets/photos/slider-dec.png
+    - assets/photos/survey_logo.png
+
   fonts:
-     - family: Roboto
-       fonts:
-         - asset: assets/fonts/Roboto-Regular.ttf
-     - family: Snoopy
-       fonts:
-         - asset: assets/fonts/snoopy_reg-webfont.otf
-     - family: Sans
-       fonts:
-         - asset: assets/fonts/TikTokSans-Regular.ttf
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+    - family: Snoopy
+      fonts:
+        - asset: assets/fonts/snoopy_reg-webfont.otf
+    - family: Sans
+      fonts:
+        - asset: assets/fonts/TikTokSans-Regular.ttf
+    - family: FlexSlider
+      fonts:
+        - asset: assets/fonts/flexslider-icon.ttf
+    - family: FontAwesome
+      fonts:
+        - asset: assets/fonts/fontawesome-webfont.ttf
+    - family: Slick
+      fonts:
+        - asset: assets/fonts/slick.ttf
+    - family: Bosstony
+      fonts:
+        - asset: assets/fonts/Bosstony.ttf

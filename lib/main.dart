@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pocket_gad/screens/control_panel.dart';
-import 'screens/landing_page.dart';
-import 'screens/login_page.dart';
 
 void main() {
   runApp(const MainApp());
@@ -22,9 +20,9 @@ class MainApp extends StatelessWidget {
           backgroundColor: Color.fromARGB(255, 234, 160, 251)
         )
       ),
-      home: const LoginScreen(), // start here
+      home: const LandingPage(), // start here
       /*routes: {
-        '/about': (context) => const AboutMePage(),
+        '/LandingPage': (context) => const LandingPage(),
         '/contact': (context) => const ContactPage(),
         '/more': (context) => const MoreInfoPage(),
       },*/
