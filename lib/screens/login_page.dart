@@ -50,6 +50,11 @@ class _LoginscreenState extends State<Loginscreen> {
       if (!mounted) return;
       Navigator.of(context).pop(); // Close loading dialog
 
+      //if (!mounted) return;
+      //nagivator.pushReplacement (
+      //context,
+      //MaterialPageRoute(builder: context) == const yourdartfile()),
+
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Login successful!")),
