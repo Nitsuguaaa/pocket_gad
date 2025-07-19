@@ -28,6 +28,9 @@ flutter:
     - assets/photos/gad_logo.png
     - assets/photos/slider-dec.png
     - assets/photos/survey_logo.png
+    - assets/dummy-data/accounts.json
+    - assets/dummy-data/attendance_data.json
+    - assets/dummy-data/TNA_data.json
 
   fonts:
     - family: Roboto

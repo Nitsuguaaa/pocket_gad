@@ -1,7 +1,21 @@
 import 'dart:ui'; // for glossy or blur effect
 import 'package:flutter/material.dart';
 
+import 'package:pocket_gad/screens/control_panel.dart';
 
+//BACKEND
+import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
+
+Future<List<Map<String, dynamic>>> loadAccounts() async {
+  final String jsonString = await rootBundle.loadString(
+    'assets/dummy-data/accounts.json',
+  );
+  final List<dynamic> jsonData = jsonDecode(jsonString);
+  return jsonData.cast<Map<String, dynamic>>();
+}
+
+//DEBUG MAIN
 void main() {
   runApp(const LoginScreen());
 }
@@ -30,115 +44,118 @@ class _LoginscreenState extends State<Loginscreen> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _obscurePassword = true; //controls whether the password text is hidden(obscured)or visible
+  bool _obscurePassword =
+      true; //controls whether the password text is hidden(obscured)or visible
 
-
-// loading circular progress
+  // loading circular progress
   void _handleLogin() async {
-    if (_formKey.currentState!.validate()) {
-      if (!mounted) return;
+    final username = _usernameController.text.trim(); // ← added .trim()
+    final password = _passwordController.text.trim(); // ← added .trim()
 
-      // show loading dialog
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (_) => const Center(child: CircularProgressIndicator()),
+    final String jsonString = await rootBundle.loadString(
+      'assets/dummy-data/accounts.json',
+    );
+    final List<dynamic> accounts = json.decode(jsonString);
+
+    final matchedAccount = accounts.firstWhere(
+      (account) =>
+          account['username'] == username && account['password'] == password,
+      orElse: () => null,
+    );
+
+    if (matchedAccount != null) {
+      final role = matchedAccount['role'];
+      final username = _usernameController.text.trim();
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ControlPanel(username: username, role: role),
+        ),
       );
-
-      await Future.delayed(const Duration(seconds: 2));
-
-      if (!mounted) return;
-      Navigator.of(context).pop(); // Close loading dialog
-
-      //if (!mounted) return;
-      //nagivator.pushReplacement (
-      //context,
-      //MaterialPageRoute(builder: context) == const yourdartfile()),
-
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Login successful!")),
-      );
+    } else {
+      // Show error (wrong username or password)
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Invalid credentials')));
     }
   }
 
+  // password dialog
+  void _showForgotPasswordDialog() {
+    final emailController = TextEditingController();
 
-// password dialog
-void _showForgotPasswordDialog() {
-  final emailController = TextEditingController();
-
-  showDialog(
-    context: context,
-    builder: (ctx) {
-      return AlertDialog(
-        title: const Text("Forgot Password"),
-        content: TextField(
-          controller: emailController,
-          decoration: const InputDecoration(
-            labelText: "Enter your email",
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          title: const Text("Forgot Password"),
+          content: TextField(
+            controller: emailController,
+            decoration: const InputDecoration(labelText: "Enter your email"),
           ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text("Cancel"),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              final email = emailController.text.trim();
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: const Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final email = emailController.text.trim();
 
-              final validEmailRegex = RegExp(
-                r'^\d{2}-\d{5}@g\.batstate-u\.edu\.ph$', //gsuite account
-              );
+                final validEmailRegex = RegExp(
+                  r'^\d{2}-\d{5}@g\.batstate-u\.edu\.ph$', //gsuite account
+                );
 
-              if (!validEmailRegex.hasMatch(email)) {
+                if (!validEmailRegex.hasMatch(email)) {
+                  if (!mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Please enter a valid BatStateU email."),
+                    ),
+                  );
+                  return;
+                }
+
+                Navigator.of(ctx).pop(); // Close forgot password dialog
+
+                if (!mounted) return;
+
+                // Show loading spinner
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (_) =>
+                      const Center(child: CircularProgressIndicator()),
+                );
+
+                await Future.delayed(const Duration(seconds: 2));
+
+                if (!mounted) return;
+                Navigator.of(context).pop(); // Close loading dialog
+
                 if (!mounted) return;
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Please enter a valid BatStateU email."),
-                  ),
+                  SnackBar(content: Text("Reset code sent to $email")),
                 );
-                return;
-              }
+              },
+              child: const Text("Send Code"),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
-              Navigator.of(ctx).pop(); // Close forgot password dialog
-
-              if (!mounted) return;
-
-              // Show loading spinner
-              showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (_) => const Center(child: CircularProgressIndicator()),
-              );
-
-              await Future.delayed(const Duration(seconds: 2));
-
-              if (!mounted) return;
-              Navigator.of(context).pop(); // Close loading dialog
-
-              if (!mounted) return;
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("Reset code sent to $email")),
-              );
-            },
-            child: const Text("Send Code"),
-          ),
-        ],
-      );
-    },
-  );
-}
-
-// eye icon and size for form field  
+  // eye icon and size for form field
   InputDecoration _inputDecoration(String label, {bool withToggle = false}) {
     return InputDecoration(
       labelText: label,
       labelStyle: const TextStyle(
-      fontSize: 13,          
-      fontFamily: 'Roboto',   
-      color: Colors.black54,  
-    ),
+        fontSize: 13,
+        fontFamily: 'Roboto',
+        color: Colors.black54,
+      ),
       border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       filled: true,
       fillColor: Colors.white,
@@ -157,7 +174,7 @@ void _showForgotPasswordDialog() {
     );
   }
 
-// username validator
+  // username validator
   String? _usernameValidator(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your username';
@@ -165,15 +182,16 @@ void _showForgotPasswordDialog() {
     if (value.length < 9 || value.length > 13) {
       return 'Invalid username';
     }
-    final pattern = RegExp(r'^\d{2}-\d+-[a-z]{2,}$'); // Format: 22-00000-std (student)or22-00000-ad(admin)
+    final pattern = RegExp(
+      r'^\d{2}-\d+-[a-z]{2,}$',
+    ); // Format: 22-00000-std (student)or22-00000-ad(admin)
     if (!pattern.hasMatch(value)) {
       return 'Invalid username';
     }
     return null;
   }
 
-
-//password validator
+  //password validator
   String? _passwordValidator(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your password';
@@ -194,6 +212,9 @@ void _showForgotPasswordDialog() {
     final isMobile = screenSize.width < 600;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 234, 160, 251),
+      ),
       body: Stack(
         children: [
           Container(
@@ -205,7 +226,8 @@ void _showForgotPasswordDialog() {
             ),
           ),
           Center(
-            child: ClipRRect( // connected to "import:'dart:ui'", it's add glassmorphic blur
+            child: ClipRRect(
+              // connected to "import:'dart:ui'", it's add glassmorphic blur
               borderRadius: BorderRadius.circular(20),
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
@@ -230,8 +252,15 @@ void _showForgotPasswordDialog() {
                             )
                           : Row(
                               children: [
-                                Expanded(child: _buildLeftPanel(isMobile, isRow: true)),
-                                Expanded(child: _buildRightPanel(isMobile, isRow: true)),
+                                Expanded(
+                                  child: _buildLeftPanel(isMobile, isRow: true),
+                                ),
+                                Expanded(
+                                  child: _buildRightPanel(
+                                    isMobile,
+                                    isRow: true,
+                                  ),
+                                ),
                               ],
                             );
                     },
@@ -245,7 +274,7 @@ void _showForgotPasswordDialog() {
     );
   }
 
-// contains logos and greetings
+  // contains logos and greetings
   Widget _buildLeftPanel(bool isMobile, {required bool isRow}) {
     return Container(
       width: isRow ? null : double.infinity,
@@ -293,111 +322,102 @@ void _showForgotPasswordDialog() {
     );
   }
 
-//contain login form
-Widget _buildRightPanel(bool isMobile, {required bool isRow}) {
-  return Container(
-    width: isRow ? null : double.infinity,
-    padding: const EdgeInsets.all(24),
-    decoration: BoxDecoration(
-      color: const Color(0xFFE8D8FF),
-      borderRadius: BorderRadius.only(
-        topRight: isRow ? const Radius.circular(20) : Radius.zero,
-        bottomRight: isRow ? const Radius.circular(20) : Radius.zero,
-        bottomLeft: !isRow ? const Radius.circular(20) : Radius.zero,
+  //contain login form
+  Widget _buildRightPanel(bool isMobile, {required bool isRow}) {
+    return Container(
+      width: isRow ? null : double.infinity,
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: const Color(0xFFE8D8FF),
+        borderRadius: BorderRadius.only(
+          topRight: isRow ? const Radius.circular(20) : Radius.zero,
+          bottomRight: isRow ? const Radius.circular(20) : Radius.zero,
+          bottomLeft: !isRow ? const Radius.circular(20) : Radius.zero,
+        ),
       ),
-    ),
-    child: Stack(
-      children: [
-        // overlay image 
-        Positioned.fill(
-          child: Opacity(
-            opacity: 0.05,
-            child: Image.asset(
-              "photos/overlay-women.png",
-              fit: BoxFit.cover,
+      child: Stack(
+        children: [
+          // overlay image
+          Positioned.fill(
+            child: Opacity(
+              opacity: 0.05,
+              child: Image.asset("photos/overlay-women.png", fit: BoxFit.cover),
             ),
           ),
-        ),
 
-        //form content
-        Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Login",
-                style: TextStyle(
-                  fontFamily: 'Roboto',
-                  fontSize: isMobile ? 22 : 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
-                controller: _usernameController,
-                decoration: _inputDecoration("Username"),
-                validator: _usernameValidator,
-                style: const TextStyle(
-                  fontFamily: 'Roboto',
-                  fontSize: 12,
-                ),
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _passwordController,
-                obscureText: _obscurePassword,
-                decoration: _inputDecoration("Password", withToggle: true),
-                validator: _passwordValidator,
-                style: const TextStyle(
-                  fontFamily: 'Roboto',
-                  fontSize: 12,
-                ),
-              ),
-              const SizedBox(height: 8),
-              InkWell(
-                onTap: _showForgotPasswordDialog,
-                child: const Text(
-                  "Forgot Password?",
+          //form content
+          Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Login",
                   style: TextStyle(
-                    fontFamily: 'Sans',
-                    color: Colors.black54,
-                    fontSize: 12,
-                    decoration: TextDecoration.underline,
+                    fontFamily: 'Roboto',
+                    fontSize: isMobile ? 22 : 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
                   ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _handleLogin,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    side: const BorderSide(color: Colors.black),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                  ),
+                const SizedBox(height: 8),
+                TextFormField(
+                  controller: _usernameController,
+                  decoration: _inputDecoration("Username"),
+                  validator: _usernameValidator,
+                  style: const TextStyle(fontFamily: 'Roboto', fontSize: 12),
+                ),
+                const SizedBox(height: 12),
+                TextFormField(
+                  controller: _passwordController,
+                  obscureText: _obscurePassword,
+                  decoration: _inputDecoration("Password", withToggle: true),
+                  validator: _passwordValidator,
+                  style: const TextStyle(fontFamily: 'Roboto', fontSize: 12),
+                ),
+                const SizedBox(height: 8),
+                InkWell(
+                  onTap: _showForgotPasswordDialog,
                   child: const Text(
-                    "LOGIN",
+                    "Forgot Password?",
                     style: TextStyle(
                       fontFamily: 'Sans',
-                      color: Colors.black87,
-                      fontSize: 14,
-                      letterSpacing: 1.2,
+                      color: Colors.black54,
+                      fontSize: 12,
+                      decoration: TextDecoration.underline,
                     ),
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: _handleLogin,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      side: const BorderSide(color: Colors.black),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    child: const Text(
+                      "LOGIN",
+                      style: TextStyle(
+                        fontFamily: 'Sans',
+                        color: Colors.black87,
+                        fontSize: 14,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
-    ),
-  );
-}
+        ],
+      ),
+    );
+  }
 }

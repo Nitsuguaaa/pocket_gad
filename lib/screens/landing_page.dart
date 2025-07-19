@@ -90,7 +90,7 @@ class _LandingPageState extends State<LandingPage> {
 Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
-      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+      backgroundColor: Theme.of(context).appBarTheme.backgroundColor ?? const Color(0xFFEAA0FB),
       title: Row(
         children: [
           Image.asset(

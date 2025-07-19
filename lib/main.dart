@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pocket_gad/screens/control_panel.dart';
 
+import 'package:pocket_gad/screens/landing_page.dart';
+import 'package:pocket_gad/screens/login_page.dart';
 void main() {
   runApp(const MainApp());
 }
@@ -21,11 +23,9 @@ class MainApp extends StatelessWidget {
         )
       ),
       home: const LandingPage(), // start here
-      /*routes: {
-        '/LandingPage': (context) => const LandingPage(),
-        '/contact': (context) => const ContactPage(),
-        '/more': (context) => const MoreInfoPage(),
-      },*/
+      routes: {
+        '/login': (context) => const LoginScreen(),
+      },
     );
   }
 }
