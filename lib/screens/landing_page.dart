@@ -88,6 +88,7 @@ class _LandingPageState extends State<LandingPage> {
 
 @override
 Widget build(BuildContext context) {
+  final isMobile = MediaQuery.of(context).size.width < 600;
   return Scaffold(
     appBar: AppBar(
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
@@ -98,9 +99,13 @@ Widget build(BuildContext context) {
             height: 36,
           ),
           const SizedBox(width: 12),
-          const Text(
-            "Gender and Development",
-            style: AppTextStyles.subtitle,
+          Flexible(
+            child: Text(
+              isMobile ? "GAD" : "Gender and Development",
+              style: AppTextStyles.subtitle,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
           ),
         ],
       ),
