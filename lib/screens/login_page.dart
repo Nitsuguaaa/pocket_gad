@@ -212,6 +212,7 @@ class _LoginscreenState extends State<Loginscreen> {
     final isMobile = screenSize.width < 600;
 
     return Scaffold(
+      resizeToAvoidBottomInset: true, // make keyboard not push content
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 234, 160, 251),
       ),
@@ -252,17 +253,18 @@ class _LoginscreenState extends State<Loginscreen> {
                             )
                           : Row(
                               children: [
-                                Expanded(
+                               Expanded(
+                                child: SizedBox.expand(
                                   child: _buildLeftPanel(isMobile, isRow: true),
                                 ),
+                              ),
                                 Expanded(
-                                  child: _buildRightPanel(
-                                    isMobile,
-                                    isRow: true,
+                                  child: SizedBox.expand(
+                                      child: _buildRightPanel(isMobile, isRow: true),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            );
+                                ],
+                              );
                     },
                   ),
                 ),
@@ -346,76 +348,84 @@ class _LoginscreenState extends State<Loginscreen> {
           ),
 
           //form content
-          Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Login",
-                  style: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontSize: isMobile ? 22 : 28,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TextFormField(
-                  controller: _usernameController,
-                  decoration: _inputDecoration("Username"),
-                  validator: _usernameValidator,
-                  style: const TextStyle(fontFamily: 'Roboto', fontSize: 12),
-                ),
-                const SizedBox(height: 12),
-                TextFormField(
-                  controller: _passwordController,
-                  obscureText: _obscurePassword,
-                  decoration: _inputDecoration("Password", withToggle: true),
-                  validator: _passwordValidator,
-                  style: const TextStyle(fontFamily: 'Roboto', fontSize: 12),
-                ),
-                const SizedBox(height: 8),
-                InkWell(
-                  onTap: _showForgotPasswordDialog,
-                  child: const Text(
-                    "Forgot Password?",
-                    style: TextStyle(
-                      fontFamily: 'Sans',
-                      color: Colors.black54,
-                      fontSize: 12,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: _handleLogin,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      side: const BorderSide(color: Colors.black),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+          Container(
+              padding: const EdgeInsets.all(32),
+              color: const Color(0xFFE9D7FF), // right panel color
+              child: Center(
+                child: SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 400),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center, // center vertically
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            "Login",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontSize: isMobile ? 22 : 28,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          TextFormField(
+                            controller: _usernameController,
+                            decoration: _inputDecoration("Username"),
+                            validator: _usernameValidator,
+                          ),
+                          const SizedBox(height: 16),
+                          TextFormField(
+                            controller: _passwordController,
+                            obscureText: _obscurePassword,
+                            decoration: _inputDecoration("Password", withToggle: true),
+                            validator: _passwordValidator,
+                          ),
+                          const SizedBox(height: 12),
+                          InkWell(
+                            onTap: _showForgotPasswordDialog,
+                            child: const Text(
+                              "Forgot Password?",
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 12,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: _handleLogin,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                side: const BorderSide(color: Colors.black),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                padding: const EdgeInsets.symmetric(vertical: 14),
+                              ),
+                              child: const Text(
+                                "LOGIN",
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 14,
+                                  letterSpacing: 1.2,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text(
-                      "LOGIN",
-                      style: TextStyle(
-                        fontFamily: 'Sans',
-                        color: Colors.black87,
-                        fontSize: 14,
-                        letterSpacing: 1.2,
-                      ),
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
         ],
       ),
     );
