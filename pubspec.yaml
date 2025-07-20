@@ -18,6 +18,7 @@ dev_dependencies:
   flutter_lints: ^6.0.0
 
 flutter:
+
   uses-material-design: true
 
   assets:
@@ -25,13 +26,31 @@ flutter:
     - assets/photos/desktop-login-hiFi.png
     - assets/photos/overlay-women.png
     - assets/photos/gad_logo.png
+    - assets/photos/slider-dec.png
+    - assets/photos/survey_logo.png
+    - assets/dummy-data/accounts.json
+    - assets/dummy-data/attendance_data.json
+    - assets/dummy-data/TNA_data.json
+
   fonts:
-     - family: Roboto
-       fonts:
-         - asset: assets/fonts/Roboto-Regular.ttf
-     - family: Snoopy
-       fonts:
-         - asset: assets/fonts/snoopy_reg-webfont.otf
-     - family: Sans
-       fonts:
-         - asset: assets/fonts/TikTokSans-Regular.ttf
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+    - family: Snoopy
+      fonts:
+        - asset: assets/fonts/snoopy_reg-webfont.otf
+    - family: Sans
+      fonts:
+        - asset: assets/fonts/TikTokSans-Regular.ttf
+    - family: FlexSlider
+      fonts:
+        - asset: assets/fonts/flexslider-icon.ttf
+    - family: FontAwesome
+      fonts:
+        - asset: assets/fonts/fontawesome-webfont.ttf
+    - family: Slick
+      fonts:
+        - asset: assets/fonts/slick.ttf
+    - family: Bosstony
+      fonts:
+        - asset: assets/fonts/Bosstony.ttf
