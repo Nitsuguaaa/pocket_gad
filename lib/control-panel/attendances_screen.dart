@@ -14,12 +14,15 @@ class _AttendancesScreen extends State<AttendancesScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
     return Container(
       margin: const EdgeInsets.all(10.0),
-      child: Column(children: [
-        Row(children: [
-          Text("Attendance ", style: AppTextStyles.header1),
-          Text(" home / Attendance", style: AppTextStyles.body)
-        ],),
-        Container(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text("Attendance ", style: AppTextStyles.header1),
+              Text(" home / Attendance", style: AppTextStyles.body),
+            ],
+          ),
+          Container(
             //STYLING
             width: screenWidth * 0.9,
             height: screenHeight * 0.3,
@@ -37,9 +40,96 @@ class _AttendancesScreen extends State<AttendancesScreen> {
 
               children: [
                 Text("Attendance List", style: AppTextStyles.AppTitle),
-              ],),
+                ElevatedButton(
+                  onPressed: () {},
+
+                  //STYLING
+                  style: ElevatedButton.styleFrom(
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadiusGeometry.circular(14)
+                    )
+                  ),
+
+                  //CONTENTS
+                  child: Row(children: [
+                    Text("ARIBA! Kababaihan 2025",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Roboto',
+
+                      ),
+                    ),
+                    SizedBox(width: 80,),
+                    Container(
+                      //STYLING
+                      padding: EdgeInsets.only(left: 5, right: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(10)
+                      ),
+
+
+                      //CONTENTS
+                      child: 
+                      Text("Active",
+                      style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Roboto',
+                                    fontSize: 18,
+                                  ),
+                      )
+                    ,)
+                  ]),
+                ),
+                SizedBox(width: 10,),
+                ElevatedButton(
+                  onPressed: () {},
+
+                  //STYLING
+                  style: ElevatedButton.styleFrom(
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadiusGeometry.circular(14)
+                    )
+                  ),
+
+                  //CONTENTS
+                  child: Row(children: [
+                    Text("GAD Talk 2024",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Roboto',
+
+                      ),
+                    ),
+                    SizedBox(width: 145,),
+                    Container(
+                      //STYLING
+                      padding: EdgeInsets.only(left: 5, right: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(10)
+                      ),
+
+
+                      //CONTENTS
+                      child: 
+                      Text("Ended",
+                      style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Roboto',
+                                    fontSize: 18,
+                                  ),
+                      )
+                    ,)
+                  ]),
+                ),
+              ],
+            ),
           ),
-      ],)
+        ],
+      ),
     );
   }
 
@@ -47,9 +137,7 @@ class _AttendancesScreen extends State<AttendancesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       //appBar: AppBar(title: const Text("Attendance")),
-      body: Center(
-        child: _buildLandingPage(),
-      ),
+      body: Center(child: _buildLandingPage()),
     );
   }
 }

@@ -40,7 +40,94 @@ class _SurveysScreen extends State<SurveysScreen> {
 
               children: [
                 Text("Survey List", style: AppTextStyles.AppTitle),
-              ],),
+                ElevatedButton(
+                  onPressed: () {},
+
+                  //STYLING
+                  style: ElevatedButton.styleFrom(
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadiusGeometry.circular(14),
+                    ),
+                  ),
+
+                  //CONTENTS
+                  child: Row(
+                    children: [
+                      Text(
+                        "TNA",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Roboto',
+                        ),
+                      ),
+                      SizedBox(width: 190),
+                      Container(
+                        //STYLING
+                        padding: EdgeInsets.only(left: 5, right: 5),
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+
+                        //CONTENTS
+                        child: Text(
+                          "Active",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Roboto',
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 10,),
+                ElevatedButton(
+                  onPressed: () {},
+
+                  //STYLING
+                  style: ElevatedButton.styleFrom(
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadiusGeometry.circular(14)
+                    )
+                  ),
+
+                  //CONTENTS
+                  child: Row(children: [
+                    Text("GREAT",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Roboto',
+
+                      ),
+                    ),
+                    SizedBox(width: 170,),
+                    Container(
+                      //STYLING
+                      padding: EdgeInsets.only(left: 5, right: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(10)
+                      ),
+
+
+                      //CONTENTS
+                      child: 
+                      Text("Paused",
+                      style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Roboto',
+                                    fontSize: 18,
+                                  ),
+                      )
+                    ,)
+                  ]),
+                ),
+              ],
+            ),
           ),
         ],
       ),

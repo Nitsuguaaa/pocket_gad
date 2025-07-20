@@ -1,0 +1,12 @@
+[
+  {
+    "username": "delapena@batstate-u.edu.ph",
+    "password": "Delapena123",
+    "role": "admin"
+  },
+  {
+    "username": "22-03849@g.batstate-u.edu.ph",
+    "password": "22-03849",
+    "role": "student"
+  }
+]
