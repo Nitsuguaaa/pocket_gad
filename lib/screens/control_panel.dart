@@ -16,7 +16,7 @@ class ControlPanel extends StatefulWidget {
 }
 
 class _ControlPanelState extends State<ControlPanel> {
-  Widget _currentScreen = const StatisticsScreen();
+  Widget _currentScreen = const SurveysScreen();
 
   void _selectScreen(Widget screen) {
     setState(() {
