@@ -100,7 +100,10 @@ Widget build(BuildContext context) {
           const SizedBox(width: 12),
           const Text(
             "Gender and Development",
-            style: AppTextStyles.subtitle,
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 14
+            ),
           ),
         ],
       ),
@@ -132,7 +135,7 @@ Widget build(BuildContext context) {
       children: [
         Positioned.fill(
             child: Image.asset(
-              "assets/photos/desktop-login-HIFI.png",
+              "assets/photos/desktop-login-HiFi.png",
               fit: BoxFit.cover,
             ),
         ),

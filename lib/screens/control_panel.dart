@@ -21,7 +21,16 @@ class ControlPanel extends StatefulWidget {
 }
 
 class _ControlPanelState extends State<ControlPanel> {
-  Widget _currentScreen = const SurveysScreen();
+  late Widget _currentScreen;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentScreen = SurveysScreen(
+      username: widget.username,
+      role: widget.role,
+    );
+  }
 
   void _selectScreen(Widget screen) {
     setState(() {
@@ -39,35 +48,45 @@ class _ControlPanelState extends State<ControlPanel> {
         backgroundColor: Color.fromARGB(255, 234, 160, 251),
       ),
       drawer: Drawer(
-        //backgroundColor:Color.fromARGB(255, 234, 160, 251),
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Theme.of(context).appBarTheme.backgroundColor ?? const Color(0xFFEAA0FB),
+                color: Theme.of(context).appBarTheme.backgroundColor ??
+                    const Color(0xFFEAA0FB),
               ),
               child: Text('Options', style: AppTextStyles.header1),
             ),
             ListTile(
               title: const Text("Surveys", style: AppTextStyles.body),
               onTap: () {
-                _selectScreen(const SurveysScreen());
+                _selectScreen(SurveysScreen(
+                  username: widget.username,
+                  role: widget.role,
+                ));
               },
             ),
             ListTile(
               title: const Text("Attendance", style: AppTextStyles.body),
               onTap: () {
-                _selectScreen(const AttendancesScreen());
+                _selectScreen(AttendancesScreen(
+                  username: widget.username,
+                  role: widget.role,
+                ));
               },
             ),
             ListTile(
               title: const Text("Logout", style: AppTextStyles.body),
               onTap: () {
-                Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/',
+                  (route) => false,
+                );
               },
             ),
-            if (widget.role == 'admin') // 👈 Only show if role is admin
+            if (widget.role == 'admin')
               ListTile(
                 title: const Text(
                   "Statistics [Admin]",

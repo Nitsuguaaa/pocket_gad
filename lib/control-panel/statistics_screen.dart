@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:pocket_gad/utils/app_text_style.dart';
 
 class StatisticsScreen extends StatefulWidget {
@@ -9,13 +12,62 @@ class StatisticsScreen extends StatefulWidget {
 }
 
 class _StatisticsScreen extends State<StatisticsScreen> {
-  Widget _buildLandingPage() {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
+  int totalResponses = 10;
+  double averageScore = 0.0;
+  int studentCount = 0;
+  int employeeCount = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    loadStatisticsData();
+  }
+
+  Future<void> loadStatisticsData() async {
+    final tnaJson = await rootBundle.loadString('assets/dummy-data/TNA_data.json');
+    final attendanceJson = await rootBundle.loadString('assets/dummy-data/attendance_data.json');
+
+    final tnaData = json.decode(tnaJson) as Map<String, dynamic>;
+    final attendanceData = json.decode(attendanceJson) as Map<String, dynamic>;
+
+    int responses = 0;
+    double scoreSum = 0;
+
+    for (var user in tnaData.values) {
+      for (var q in user) {
+        final score = q.values.first;
+        scoreSum += score;
+        responses++;
+      }
+    }
+
+    int students = 0;
+    int admins = 0;
+
+    for (var list in attendanceData.values) {
+      for (var entry in list) {
+        final role = entry.values.first;
+        if (role == "student") {
+          students++;
+        } else if (role == "admin") {
+          admins++;
+        }
+      }
+    }
+
+    setState(() {
+      totalResponses = responses;
+      averageScore = responses > 0 ? (scoreSum / responses) : 0.0;
+      studentCount = students;
+      employeeCount = admins;
+    });
+  }
+
+  Widget _buildLandingPage() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(10.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
@@ -24,251 +76,105 @@ class _StatisticsScreen extends State<StatisticsScreen> {
             ],
           ),
           Container(
-            //STYLING
-            width: screenWidth * 0.9,
-            height: screenHeight * 0.53,
-            padding: EdgeInsets.all(10),
-            margin: EdgeInsets.only(top: 20),
+            width: double.infinity,
+            padding: const EdgeInsets.all(10),
+            margin: const EdgeInsets.only(top: 20),
             decoration: BoxDecoration(
-              color: Color(0xFFDDCDD5), // background color
-              borderRadius: BorderRadius.circular(16), // corner radius
-              //border: Border.all(color: Colors.black, width: 2), // border
+              color: const Color(0xFFDDCDD5),
+              borderRadius: BorderRadius.circular(16),
             ),
-
-            //CONTENTS
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-
               children: [
-                //STATISTICS
                 Text("Statistics", style: AppTextStyles.AppTitle),
+                const SizedBox(height: 10),
                 Container(
-                  width: screenWidth * 0.87,
-                  //height: screenHeight * 0.5,
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.only(top: 5, left: 5),
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Color(0xFFFDF5F5), // background color
-                    borderRadius: BorderRadius.circular(14), // corner radius
-                    //border: Border.all(color: Colors.black, width: 2), // border
+                    color: const Color(0xFFFDF5F5),
+                    borderRadius: BorderRadius.circular(14),
                   ),
-
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-
                     children: [
-                      Container(
-                        //STYLING
-                        width: screenWidth * 0.9,
-                        height: screenHeight * 0.1,
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                          color: Color(0xFF10A3B6), // background color
-                          borderRadius: BorderRadius.circular(
-                            16,
-                          ), // corner radius
-                          //border: Border.all(color: Colors.black, width: 2), // border
-                        ),
-
-                        //CONTENTS
-                        child: Row(
-                          children: [
-                            Column(
-                              children: [
-                                Text(
-                                  "00",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 30,
-                                  ),
-                                ),
-                                Text(
-                                  "Responses",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Roboto',
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(width: 150),
-                            //Text("More Info"),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        //STYLING
-                        width: screenWidth * 0.9,
-                        height: screenHeight * 0.1,
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                          color: Color(0xFF05A94F), // background color
-                          borderRadius: BorderRadius.circular(
-                            16,
-                          ), // corner radius
-                          //border: Border.all(color: Colors.black, width: 2), // border
-                        ),
-
-                        //CONTENTS
-                        child: Row(
-                          children: [
-                            SizedBox(width: 27,),
-                            Column(
-                              children: [
-                                Text(
-                                  "00",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 30,
-                                  ),
-                                ),
-                                Text(
-                                  "ARS",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Roboto',
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(width: 160),
-                            //Text("More Info"),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        //STYLING
-                        width: screenWidth * 0.9,
-                        height: screenHeight * 0.1,
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFE6A30E), // background color
-                          borderRadius: BorderRadius.circular(
-                            16,
-                          ), // corner radius
-                          //border: Border.all(color: Colors.black, width: 2), // border
-                        ),
-
-                        //CONTENTS
-                        child: Row(
-                          children: [
-                            SizedBox(width: 7,),
-                            Column(
-                              children: [
-                                Text(
-                                  "00",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 30,
-                                  ),
-                                ),
-                                Text(
-                                  "Students",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Roboto',
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(width: 150),
-                            //Text("More Info"),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        //STYLING
-                        width: screenWidth * 0.9,
-                        height: screenHeight * 0.1,
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFDE2948), // background color
-                          borderRadius: BorderRadius.circular(
-                            16,
-                          ), // corner radius
-                          //border: Border.all(color: Colors.black, width: 2), // border
-                        ),
-
-                        //CONTENTS
-                        child: Row(
-                          children: [
-                            Column(
-                              children: [
-                                Text(
-                                  "00",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 30,
-                                  ),
-                                ),
-                                Text(
-                                  "Employees",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Roboto',
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(width: 160),
-                            //Text("More Info"),
-                          ],
-                        ),
-                      ),
+                      _statCard("$totalResponses", "Responses", const Color(0xFF10A3B6)),
+                      _statCard(averageScore.toStringAsFixed(2), "ARS", const Color(0xFF05A94F)),
+                      _statCard("$studentCount", "Students", const Color(0xFFE6A30E)),
+                      _statCard("$employeeCount", "Employees", const Color(0xFFDE2948)),
                     ],
                   ),
                 ),
               ],
             ),
           ),
-          Container(
-            //STYLING
-            width: screenWidth * 0.9,
-            height: screenHeight * 0.7,
-            padding: EdgeInsets.all(10),
-            margin: EdgeInsets.only(top: 20),
-            decoration: BoxDecoration(
-              color: Color(0xFFDDCDD5), // background color
-              borderRadius: BorderRadius.circular(16), // corner radius
-              //border: Border.all(color: Colors.black, width: 2), // border
-            ),
 
-            //CONTENTS
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(10),
+            margin: const EdgeInsets.only(top: 20),
+            decoration: BoxDecoration(
+              color: const Color(0xFFDDCDD5),
+              borderRadius: BorderRadius.circular(16),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //SURVEY STATUS
                 Text("Survey Status", style: AppTextStyles.AppTitle),
+                const SizedBox(height: 10),
                 Container(
-                  
-                  width: screenWidth * 0.87,
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.only(top: 5, left: 5),
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Color(0xFFFDF5F5), // background color
-                    borderRadius: BorderRadius.circular(14), // corner radius
-                    //border: Border.all(color: Colors.black, width: 2), // border
+                    color: const Color(0xFFFDF5F5),
+                    borderRadius: BorderRadius.circular(14),
                   ),
-
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [Text("Training Needs Assessment", style: TextStyle(fontFamily: 'Roboto'),)]),
+                    children: [
+                      const Text("Training Needs Assessment", style: TextStyle(fontFamily: 'Roboto')),
+                      const SizedBox(height: 20),
+                      SizedBox(
+                        height: 200,
+                        child: BarChart(
+                          BarChartData(
+                            borderData: FlBorderData(show: false),
+                            titlesData: FlTitlesData(
+                              leftTitles: AxisTitles(
+                                sideTitles: SideTitles(showTitles: true),
+                              ),
+                              bottomTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                                  showTitles: true,
+                                  getTitlesWidget: (value, meta) {
+                                    switch (value.toInt()) {
+                                      case 0:
+                                        return const Text("Responses");
+                                      case 1:
+                                        return const Text("Students");
+                                      case 2:
+                                        return const Text("Employees");
+                                    }
+                                    return const Text('');
+                                  },
+                                ),
+                              ),
+                            ),
+                            barGroups: [
+                              BarChartGroupData(x: 0, barRods: [
+                                BarChartRodData(toY: totalResponses.toDouble(), color: Colors.blue, width: 20)
+                              ]),
+                              BarChartGroupData(x: 1, barRods: [
+                                BarChartRodData(toY: studentCount.toDouble(), color: Colors.orange, width: 20)
+                              ]),
+                              BarChartGroupData(x: 2, barRods: [
+                                BarChartRodData(toY: employeeCount.toDouble(), color: Colors.red, width: 20)
+                              ]),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -278,11 +184,48 @@ class _StatisticsScreen extends State<StatisticsScreen> {
     );
   }
 
+  Widget _statCard(String count, String label, Color color) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  count,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 28,
+                  ),
+                ),
+                Text(
+                  label,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Roboto',
+                    fontSize: 18,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Icon(Icons.bar_chart, color: Colors.white),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //appBar: AppBar(title: const Text("Statistics")),
-      body: Center(child: _buildLandingPage()),
-    );
+    return Scaffold(body: SafeArea(child: _buildLandingPage()));
   }
 }

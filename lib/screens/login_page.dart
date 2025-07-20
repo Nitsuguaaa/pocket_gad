@@ -201,7 +201,7 @@ class _LoginscreenState extends State<Loginscreen> {
         !value.contains(RegExp(r'[a-z]')) ||
         !value.contains(RegExp(r'[0-9]')) ||
         !value.contains(RegExp(r'[!@#\$&*~^%()\-_=+{}\[\]:;"<>,.?/]'))) {
-      return 'Use at least 1 letter case, number, symbol'; // Format: Dummies23. (must contains at least 1 letter case, number, symbol)
+      return 'Use at least 1 letter case, number, symbol';
     }
     return null;
   }
@@ -212,58 +212,60 @@ class _LoginscreenState extends State<Loginscreen> {
     final isMobile = screenSize.width < 600;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 234, 160, 251),
-      ),
+      appBar: AppBar(backgroundColor: const Color.fromARGB(255, 234, 160, 251)),
       body: Stack(
         children: [
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("photos/desktop-login-HIFI.png"),
+                image: AssetImage("assets/photos/desktop-login-HiFi.png"),
                 fit: BoxFit.cover,
               ),
             ),
           ),
           Center(
-            child: ClipRRect(
-              // connected to "import:'dart:ui'", it's add glassmorphic blur
-              borderRadius: BorderRadius.circular(20),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: Container(
-                  width: isMobile ? screenSize.width * 0.9 : 700,
-                  height: isMobile ? null : 450,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withAlpha(25),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-
-                  // for switches layout for mobile vs desktop
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      return isMobile
-                          ? Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                _buildLeftPanel(isMobile, isRow: false),
-                                _buildRightPanel(isMobile, isRow: false),
-                              ],
-                            )
-                          : Row(
-                              children: [
-                                Expanded(
-                                  child: _buildLeftPanel(isMobile, isRow: true),
-                                ),
-                                Expanded(
-                                  child: _buildRightPanel(
-                                    isMobile,
-                                    isRow: true,
+            child: SingleChildScrollView(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  child: Container(
+                    width: isMobile ? screenSize.width * 0.9 : 700,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withAlpha(25),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return isMobile
+                            ? Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  _buildLeftPanel(isMobile, isRow: false),
+                                  _buildRightPanel(isMobile, isRow: false),
+                                ],
+                              )
+                            : Row(
+                                children: [
+                                  Expanded(
+                                    child: _buildLeftPanel(
+                                      isMobile,
+                                      isRow: true,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            );
-                    },
+                                  Expanded(
+                                    child: _buildRightPanel(
+                                      isMobile,
+                                      isRow: true,
+                                    ),
+                                  ),
+                                ],
+                              );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -293,9 +295,15 @@ class _LoginscreenState extends State<Loginscreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              Image(image: AssetImage('photos/logo-BSU.png'), height: 120),
+              Image(
+                image: AssetImage('assets/photos/logo-bsu.png'),
+                height: 120,
+              ),
               SizedBox(width: 12),
-              Image(image: AssetImage('photos/gad_logo.png'), height: 120),
+              Image(
+                image: AssetImage('assets/photos/gad_logo.png'),
+                height: 120,
+              ),
             ],
           ),
           const SizedBox(height: 16),
@@ -341,7 +349,10 @@ class _LoginscreenState extends State<Loginscreen> {
           Positioned.fill(
             child: Opacity(
               opacity: 0.05,
-              child: Image.asset("photos/overlay-women.png", fit: BoxFit.cover),
+              child: Image.asset(
+                "assets/photos/overlay-women.png",
+                fit: BoxFit.cover,
+              ),
             ),
           ),
 
@@ -377,7 +388,7 @@ class _LoginscreenState extends State<Loginscreen> {
                   style: const TextStyle(fontFamily: 'Roboto', fontSize: 12),
                 ),
                 const SizedBox(height: 8),
-                InkWell(
+                /*InkWell(
                   onTap: _showForgotPasswordDialog,
                   child: const Text(
                     "Forgot Password?",
@@ -388,7 +399,7 @@ class _LoginscreenState extends State<Loginscreen> {
                       decoration: TextDecoration.underline,
                     ),
                   ),
-                ),
+                ),*/
                 const SizedBox(height: 8),
                 SizedBox(
                   width: double.infinity,

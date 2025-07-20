@@ -58,6 +58,11 @@ class AppTextStyles {
     fontSize: 23,
     fontFamily: 'Roboto',
   );
+
+  static const TextStyle body5 = TextStyle(
+    fontSize: 18,
+    fontFamily: 'Roboto',
+  );
 }
 
 

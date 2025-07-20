@@ -7,8 +7,8 @@ environment:
   sdk: ^3.8.1
 
 dependencies:
-  fl_chart: ^1.0.0
-  path_provider: ^2.1.2
+  fl_chart: ^0.66.2
+  path_provider: ^2.1.1
   flutter:
     sdk: flutter
 
@@ -23,7 +23,7 @@ flutter:
 
   assets:
     - assets/photos/logo-bsu.png
-    - assets/photos/desktop-login-hiFi.png
+    - assets/photos/desktop-login-HiFi.png
     - assets/photos/overlay-women.png
     - assets/photos/gad_logo.png
     - assets/photos/slider-dec.png

@@ -4,7 +4,9 @@ import 'package:pocket_gad/screens/control_panel.dart';
 import 'package:pocket_gad/screens/landing_page.dart';
 import 'package:pocket_gad/screens/login_page.dart';
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MainApp());
+  
 }
 
 class MainApp extends StatelessWidget {
