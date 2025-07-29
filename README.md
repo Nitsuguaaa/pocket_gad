@@ -75,7 +75,7 @@ This project leverages several best practices and concepts in Flutter front-end 
 - **Flutter**: Cross-platform mobile development framework.
 - **Dart**: Programming language used for Flutter apps.
 - **REST API**: Backend integration for authentication and data sync.
-- **Charts_flutter / fl_chart**: For admin dashboards.
+- **fl_chart**: For admin dashboards.
 
 ---
 
@@ -101,7 +101,6 @@ This project is developed solely for educational purposes under the IT-332 and I
 - Flutter SDK
 - Dart SDK
 - Android Studio / VS Code
-- Firebase project (if used)
 
 ### Installation
 ```bash
